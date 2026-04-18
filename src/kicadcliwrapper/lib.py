@@ -52,7 +52,12 @@ class ParserL2:
 
 
 def sanitize_name(name: str) -> str:
-    return re.sub(r"[^a-zA-Z0-9]", "_", name)
+    import keyword
+
+    clean_name = re.sub(r"[^a-zA-Z0-9]", "_", name)
+    if clean_name[0].isdigit() or keyword.iskeyword(clean_name):
+        clean_name = "_" + clean_name
+    return clean_name
 
 
 def sanitize_flag_arg_name(name: str, l2_command: ParserL2.Command) -> str:
